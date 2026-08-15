@@ -1,0 +1,79 @@
+<!-- post-container -->
+<div class="post-container">
+  <div class="post-content single-post">
+    <h3><%= articles.title %></h3>
+    <div class="post-information">
+      <span>
+        <i class="fa fa-tags" aria-hidden="true"></i>
+        <%= articles.category.name %>
+      </span>
+      <span>
+        <i class="fa fa-user" aria-hidden="true"></i>
+        <a href="/author/<%= articles.author._id %>"
+          ><%= articles.author.fname %></a
+        >
+      </span>
+      <span>
+        <i class="fa fa-calendar" aria-hidden="true"></i>
+        <%= new Date(articles.createdAt).toDateString('en-GB', { day: '2-digit',
+        month: '2-digit', year: 'numeric'}) %>
+      </span>
+    </div>
+    <img
+      class="single-feature-image"
+      src="/uploads/<%= articles.image %> "
+      alt=""
+    />
+    <p class="description"><%= articles.content %></p>
+  </div>
+</div>
+<!-- /post-container -->
+
+<!-- Comments Section -->
+<div class="comments-section mt-5">
+  <h3>Comments</h3>
+
+  <!-- Comment Form -->
+  <div class="card mb-4">
+    <div class="card-body">
+      <form action="/comment/<%= articles._id %> " method="POST">
+        <div class="mb-3">
+          <label class="form-label">Name</label>
+          <input type="text" class="form-control" name="name" required />
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Email</label>
+          <input type="email" class="form-control" name="email" required />
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Comment</label>
+          <textarea
+            class="form-control"
+            name="comment"
+            rows="3"
+            required
+          ></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit Comment</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Display Comments -->
+
+  <% comments.forEach((comment) => {%>
+  <div class="comments-list">
+    <div class="card mb-3">
+      <div class="card-body">
+        <h6 class="card-subtitle mb-2 text-muted"><%= comment.name %></h6>
+        <p class="card-text"><%= comment.comment %></p>
+        <small class="text-muted"
+          >Posted : <%= new Date(comment.createdAt).toDateString('en-GB', { day:
+          '2-digit', month: '2-digit', year: 'numeric'}) %>
+        </small>
+      </div>
+    </div>
+  </div>
+
+  <% }) %>
+</div>

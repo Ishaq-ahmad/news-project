@@ -1,0 +1,76 @@
+<div id="admin-content">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h1 class="admin-heading">Modify User Details</h1>
+      </div>
+      <div class="col-md-6 mx-auto">
+        <div class="card">
+          <h5 class="card-header">Update User</h5>
+          <div class="card-body">
+            <!-- Form Start -->
+            <form
+              action="/admin/updateUser/<%= user._id %>"
+              method="POST"
+              autocomplete="off"
+            >
+              <div class="mb-3">
+                <label class="form-label">Full Name</label>
+                <input
+                  type="text"
+                  name="fname"
+                  class="form-control"
+                  value="<%= user.fname %> "
+                  
+                />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">User Name</label>
+                <input
+                  type="text"
+                  name="user"
+                  class="form-control"
+                  value="<%= user.userName %> "
+                  readonly
+                />
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Password</label>
+                <input
+                  type="password"
+                  name="password"
+                  class="form-control"
+                  
+                 
+                />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">User Role</label>
+                <select class="form-control" name="role">
+                  <option value="author" <%= user.role== 'author' ? 'selected' : '' %> >Author</option>
+                  <option value="admin"  <%= user.role== 'admin' ? 'selected' : '' %> >%>Administrator</option>
+                </select>
+              </div>
+              <input
+                type="submit"
+                name="save"
+                class="btn btn-primary"
+                value="Update"
+               
+              />
+            </form>
+            <% if(errors.length > 0) { %>
+              <div class="alert alert-danger">
+                <% errors.forEach(function(error) { %>
+                <li><%= error.msg %></li>
+                <% }); %>
+              </div>
+              <% } %>
+            <!-- Form End-->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

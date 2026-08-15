@@ -1,0 +1,81 @@
+<div id="admin-content">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-10">
+        <h1 class="admin-heading">
+          <i class="fa fa-gears"></i> All Categories
+        </h1>
+      </div>
+      <div class="col-md-2">
+        <a class="add-new" href="/admin/addCategory">add category</a>
+      </div>
+      <div class="col-md-12">
+        <div id="catagoryTable"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/tabulator-tables@4.9.3/dist/js/tabulator.min.js"></script>
+
+<script>
+   const catagoryTable = <%- JSON.stringify(category) %>;
+  console.log(catagoryTable)
+  const table = new Tabulator("#catagoryTable", {
+      height:"300px",
+      data: catagoryTable,
+      layout:"fitColumns",
+
+      columns:[
+          {title:"S.No", hozAlign: "center", formatter:"rownum", width: 80},
+          {title:"Name", field:"name", headerFilter:"input"},
+          {title:"Slug", field:"slug", headerFilter:"input"},
+          {
+              title:"Action",
+              formatter:function(cell){
+                  return `
+                      <a href="/admin/updateCategory/${cell.getData()._id}" class="btn btn-success btn-sm">Edit</a>
+                       <button onclick="deleteCategory('${cell.getData()._id}')" class="btn btn-danger btn-sm">Delete</button>
+                  `;
+              }
+          }
+      ]
+  });
+
+  async function deleteCategory(id){
+    const confirmDelete=  confirm("Are you sure you want to delete this category?");
+    if (confirmDelete){
+      try {
+
+        const response= await fetch (`/admin/deleteCategory/${id}`, {
+          method: 'DELETE'
+        })
+
+        const result= await response.json()
+
+        if(response.ok){
+          return alert(result.message)
+          location.reload()
+        }
+
+
+        if(response.status === 400){
+          return alert(result.message)
+        }
+
+
+
+      } catch (error) {
+        console.log(error)
+      }
+    }
+  }
+</script>
+
+<%- contentFor('tabulatorCSS') %>
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/tabulator-tables@4.9.3/dist/css/tabulator.min.css"
+/>
+<link rel="stylesheet" href="/css/tabulator_bootstrap5.min.css" />

@@ -1,0 +1,62 @@
+<div id="admin-content">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h1 class="admin-heading"><i class="fa fa-cog"></i> Settings</h1>
+      </div>
+      <div class="col-md-6 mx-auto">
+        <div class="card">
+          <h5 class="card-header">Settings</h5>
+          <div class="card-body">
+            <form
+              action="/admin/setting"
+              method="POST"
+              enctype="multipart/form-data"
+            >
+              <div class="mb-3">
+                <label for="article_title" class="form-label"
+                  >Website Title</label
+                >
+                <input
+                  type="text"
+                  name="title"
+                  class="form-control"
+                  autocomplete="off"
+                  value="<%= data.title %>"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="website_logo" class="form-label">Upload Logo</label>
+                <br />
+                <div class="mb-3">
+                  <img src="/uploads/<%= data.logo %>" class="w-25 h-25" />
+                </div>
+                <input type="file" name="logo" class="form-control" />
+              </div>
+              <div class="mb-3">
+                <label for="footer_description" class="form-label"
+                  >Footer Description</label
+                >
+                <input
+                  type="text"
+                  name="description"
+                  class="form-control"
+                  autocomplete="off"
+                  value="<%= data.description %>"
+                />
+              </div>
+
+              <input
+                type="submit"
+                name="submit"
+                class="btn btn-primary"
+                value="Save"
+                required=""
+              />
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
