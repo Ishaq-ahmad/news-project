@@ -30,13 +30,13 @@ app.use(cors({
 }));
 
 
-// app.use(async (req, res, next)=>{
-//     const setting= await Setting.findOne()
+app.use(async (req, res, next)=>{
+    const setting= await Setting.findOne()
 
-//     res.locals.setting = setting;
+    res.locals.setting = setting;
 
-//     next()
-// })
+    next()
+})
 
 await connectDb()
 app.set('view engine', 'ejs')
