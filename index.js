@@ -2,6 +2,7 @@ import express from 'express'
 const app = express()
 import dotenv from 'dotenv'
 dotenv.config()
+import cors from 'cors'
 
 import cookieParser from 'cookie-parser'
 app.use(cookieParser())
@@ -19,6 +20,11 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(expressEjsLayouts)
 app.set('layout', 'layout')
+
+app.use(cors({
+    origin: process.env.frontendURL,
+    credentials: true
+}));
 
 
 // app.use(async (req, res, next)=>{
@@ -41,7 +47,9 @@ app.use('/admin', (req, res, next)=>{
 
 app.use('/admin', adminRoute)
 
-app.listen(3000, ()=>{
-    console.log('Server running on port 3000')
-})
+// app.listen(process.env.PORT, ()=>{
+//     console.log(`Server running on port ${process.env.PORT}`);
+// })
+
+export default app
 
