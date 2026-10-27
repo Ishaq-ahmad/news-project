@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <!-- <title>News</title> -->
-    <title><title><%= setting?.title || 'News Website' %></title> </title>
+    <title><%= setting?.title || 'News Website' %></title>
     <!-- Bootstrap -->
     <link href="/css/bootstrap.min.css" rel="stylesheet" />
     <!-- Font Awesome Icon -->
@@ -22,9 +22,9 @@
         <div class="row justify-content-center">
           <!-- LOGO -->
           <% if (setting?.logo) { %>
-            <a href="/" id="logo">
-              <img src="/uploads/<%= setting.logo %>" alt="Logo" />
-            </a>
+          <a href="/" id="logo">
+            <img src="/uploads/<%= setting.logo %>" alt="Logo" />
+          </a>
           <% } %>
           <!-- /LOGO -->
         </div>
@@ -40,11 +40,11 @@
               <li><a href="/">Home</a></li>
 
               <% (categories || []).forEach((category) => { %>
-                <li>
-                  <a href="/category/<%= category.slug %>">
-                    <%= category.name %>
-                  </a>
-                </li>
+              <li>
+                <a href="/category/<%= category.slug %>">
+                  <%= category.name %>
+                </a>
+              </li>
               <% }) %>
             </ul>
           </div>
@@ -72,10 +72,8 @@
       <div class="container">
         <div class="row">
           <div class="col-md-12">
-            <span></span>
-            <span><%= setting?.description || '' %></span>
-              <a href="http://www.yahubaba.com/">ISHAQ AHMAD</a></span
-            >
+            <span> <%= setting?.description || '' %> </span>
+            <a href="http://www.yahubaba.com/">ISHAQ AHMAD</a>
           </div>
         </div>
       </div>
