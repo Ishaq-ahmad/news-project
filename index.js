@@ -12,7 +12,8 @@ import path from 'path'
 import connectDb from './configs/db.js'
 import frontedRoute from './routes/fronted.route.js'
 import adminRoute from './routes/admin.route.js'
-// import Setting from './models/setting.js'
+
+import Setting from './models/setting.js'
 
 // middle Wares
 app.use(express.static(path.join(import.meta.dirname, 'public')));
