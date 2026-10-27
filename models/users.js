@@ -29,6 +29,6 @@ userSchema.pre('save', function(next){
     next
 })
 
-const User = mongoose.model('Users', userSchema);
+const User = mongoose.model('News-users', userSchema);
 
 export default User;
