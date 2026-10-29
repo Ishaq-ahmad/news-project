@@ -1,62 +1,80 @@
-import express from 'express'
-const app = express()
-import dotenv from 'dotenv'
-dotenv.config()
-import cors from 'cors'
 
+import express from 'express';
+import dotenv from 'dotenv';
+import cors from 'cors';
+import cookieParser from 'cookie-parser';
+import expressEjsLayouts from 'express-ejs-layouts';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
+import connectDb from './configs/db.js';
+import frontedRoute from './routes/fronted.route.js';
+import adminRoute from './routes/admin.route.js';
+import Setting from './models/setting.js';
 
+dotenv.config();
 
-import cookieParser from 'cookie-parser'
-app.use(cookieParser())
+const app = express();
 
-import expressEjsLayouts from 'express-ejs-layouts'
-import path from 'path'
-import connectDb from './configs/db.js'
-import frontedRoute from './routes/fronted.route.js'
-import adminRoute from './routes/admin.route.js'
+// Resolve the project directory
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-import Setting from './models/setting.js'
+// Static files: CSS, JavaScript, images, uploads
+app.use(express.static(path.join(__dirname, 'public')));
 
-// middle Wares
-app.use(express.static(path.join(import.meta.dirname, 'public')));
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
-app.set('views', path.resolve(process.cwd(), 'views'));
+// Body parsers and cookies
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+
+// EJS configuration
+app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 app.use(expressEjsLayouts);
 app.set('layout', 'layout');
 
-app.use(cors({
+// CORS
+app.use(
+  cors({
     origin: process.env.frontendURL,
-    credentials: true
-}));
+    credentials: true,
+  })
+);
 
-await connectDb()
-app.use(async (req, res, next)=>{
-    const setting= await Setting.findOne()
+// Database connection
+await connectDb();
 
+// Common settings for EJS views
+app.use(async (req, res, next) => {
+  try {
+    const setting = await Setting.findOne();
     res.locals.setting = setting;
+    next();
+  } catch (error) {
+    next(error);
+  }
+});
 
-    next()
-})
+// Frontend routes
+app.use('/', frontedRoute);
 
+// Admin layout and routes
+app.use('/admin', (req, res, next) => {
+  res.locals.layout = 'admin/layout';
+  next();
+});
 
-app.set('view engine', 'ejs')
+app.use('/admin', adminRoute);
 
+// Start server locally; Vercel imports the app
+if (process.env.NODE_ENV !== 'production') {
+  const PORT = process.env.PORT || 3000;
 
-app.use('/', frontedRoute)
-app.use('/admin', (req, res, next)=>{
-    res.locals.layout= 'admin/layout'
-    next()
-})
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+}
 
-app.use('/admin', adminRoute)
-
-// app.listen(process.env.PORT, ()=>{
-//     console.log(`Server running on port ${process.env.PORT}`);
-// })
-
-export default app
-
+export default app;

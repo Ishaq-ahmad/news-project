@@ -75,7 +75,11 @@ export const logout = (req, res) => {
 
 export const settingPage = async(req, res) => {
   const data= await Setting.findOne()
-  res.render('admin/setting', {userRole: req.role, data})
+  res.render('admin/setting', {
+    layout: false,
+    
+    
+    userRole: req.role, data})
 
 }
 
