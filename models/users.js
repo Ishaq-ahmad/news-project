@@ -26,7 +26,7 @@ userSchema.pre('save', function(next){
     if(this.isModified('password')){
         this.password= bcrypt.hashSync(this.password, 10)
     }
-    next
+    next()
 })
 
 const User = mongoose.model('News-users', userSchema);

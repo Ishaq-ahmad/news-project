@@ -13,6 +13,7 @@
   "license": "ISC",
   "type": "module",
   "dependencies": {
+    "@tailwindcss/cli": "^4.3.3",
     "bcryptjs": "^3.0.3",
     "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.7",
@@ -28,6 +29,8 @@
     "mongoose-paginate-v2": "^1.9.5",
     "multer": "^2.2.0",
     "nodemon": "^3.1.14",
-    "slugify": "^1.6.9"
+    "slugify": "^1.6.9",
+    "tailwind": "^4.0.0",
+    "tailwindcss": "^4.3.3"
   }
 }
